@@ -29,20 +29,38 @@
 		D6B40C192D61CB7E003C2655 /* raytracing-in-swiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "raytracing-in-swiftUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		D6B40C502D647DA9003C2655 /* Exceptions for "Tests" folder in "raytracing-in-swiftTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				RayTracerTests.swift,
+				raytracing_in_swiftTests.swift,
+			);
+			target = D6B40C0E2D61CB7E003C2655 /* raytracing-in-swiftTests */;
+		};
+		D6B40C512D647DA9003C2655 /* Exceptions for "Tests" folder in "raytracing-in-swiftUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				RayTracerTests.swift,
+				raytracing_in_swiftTests.swift,
+			);
+			target = D6B40C182D61CB7E003C2655 /* raytracing-in-swiftUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		D6B40C002D61CB7C003C2655 /* raytracing-in-swift */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "raytracing-in-swift";
 			sourceTree = "<group>";
 		};
-		D6B40C122D61CB7E003C2655 /* raytracing-in-swiftTests */ = {
+		D6B40C4D2D647DA9003C2655 /* Tests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "raytracing-in-swiftTests";
-			sourceTree = "<group>";
-		};
-		D6B40C1C2D61CB7E003C2655 /* raytracing-in-swiftUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "raytracing-in-swiftUITests";
+			exceptions = (
+				D6B40C502D647DA9003C2655 /* Exceptions for "Tests" folder in "raytracing-in-swiftTests" target */,
+				D6B40C512D647DA9003C2655 /* Exceptions for "Tests" folder in "raytracing-in-swiftUITests" target */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -76,9 +94,8 @@
 			isa = PBXGroup;
 			children = (
 				D6B40C002D61CB7C003C2655 /* raytracing-in-swift */,
-				D6B40C122D61CB7E003C2655 /* raytracing-in-swiftTests */,
-				D6B40C1C2D61CB7E003C2655 /* raytracing-in-swiftUITests */,
 				D6B40BFF2D61CB7C003C2655 /* Products */,
+				D6B40C4D2D647DA9003C2655 /* Tests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,9 +147,6 @@
 			dependencies = (
 				D6B40C112D61CB7E003C2655 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				D6B40C122D61CB7E003C2655 /* raytracing-in-swiftTests */,
-			);
 			name = "raytracing-in-swiftTests";
 			packageProductDependencies = (
 			);
@@ -154,7 +168,7 @@
 				D6B40C1B2D61CB7E003C2655 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				D6B40C1C2D61CB7E003C2655 /* raytracing-in-swiftUITests */,
+				D6B40C4D2D647DA9003C2655 /* Tests */,
 			);
 			name = "raytracing-in-swiftUITests";
 			packageProductDependencies = (
