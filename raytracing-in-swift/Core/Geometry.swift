@@ -57,3 +57,24 @@ struct Ray {
         return origin + (direction * t)
     }
 }
+
+extension Vec3 {
+    func rotate(around axis: Vec3, angle: Double) -> Vec3 {
+        let cosTheta = cos(angle)
+        let sinTheta = sin(angle)
+        
+        let x = (cosTheta + (1 - cosTheta) * axis.x * axis.x) * self.x +
+                ((1 - cosTheta) * axis.x * axis.y - axis.z * sinTheta) * self.y +
+                ((1 - cosTheta) * axis.x * axis.z + axis.y * sinTheta) * self.z
+        
+        let y = ((1 - cosTheta) * axis.y * axis.x + axis.z * sinTheta) * self.x +
+                (cosTheta + (1 - cosTheta) * axis.y * axis.y) * self.y +
+                ((1 - cosTheta) * axis.y * axis.z - axis.x * sinTheta) * self.z
+        
+        let z = ((1 - cosTheta) * axis.z * axis.x - axis.y * sinTheta) * self.x +
+                ((1 - cosTheta) * axis.z * axis.y + axis.x * sinTheta) * self.y +
+                (cosTheta + (1 - cosTheta) * axis.z * axis.z) * self.z
+        
+        return Vec3(x, y, z)
+    }
+}

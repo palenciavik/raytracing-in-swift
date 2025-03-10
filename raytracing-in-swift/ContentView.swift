@@ -139,22 +139,19 @@ struct CameraControlsView: View {
         let horizontalRotation = Double(delta.x) * rotationSpeed
         let verticalRotation = Double(delta.y) * rotationSpeed
         
-        // Calculate new target position by rotating around the camera position
+        // Calculate view direction and camera-relative axes
         let direction = camera.target - camera.position
+        let forward = direction.normalized()
+        let right = camera.vUp.cross(forward).normalized()
+        let up = forward.cross(right).normalized()
         
-        // Rotate horizontally around Y axis
-        let cosH = cos(horizontalRotation)
-        let sinH = sin(horizontalRotation)
-        let newX = direction.x * cosH - direction.z * sinH
-        let newZ = direction.x * sinH + direction.z * cosH
+        // First rotate around the vertical (Y) axis for horizontal mouse movement
+        let yAxis = Vec3(0, 1, 0)
+        let horizontallyRotated = direction.rotate(around: yAxis, angle: horizontalRotation)
         
-        // Rotate vertically around local X axis
-        let cosV = cos(verticalRotation)
-        let sinV = sin(verticalRotation)
-        let newY = direction.y * cosV - newZ * sinV
-        let finalZ = direction.y * sinV + newZ * cosV
+        let verticallyRotated = horizontallyRotated.rotate(around: right, angle: verticalRotation)
         
-        camera.target = camera.position + Vec3(newX, newY, finalZ)
+        camera.target = camera.position + verticallyRotated
         camera.update()
         render()
     }
