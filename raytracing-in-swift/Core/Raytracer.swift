@@ -47,16 +47,15 @@ func generateImage(width: Int, height: Int) -> PlatformImage {
 }
 
 func renderPixels(width: Int, height: Int, cgContext: CGContext) {
+    let aspectRatio = Double(width) / Double(height)
+    let camera = Camera(aspectRatio: aspectRatio)
+    
     for j in 0..<height {
         for i in 0..<width {
             let u = Double(i) / Double(width - 1)
             let v = Double(j) / Double(height - 1)
             
-            // Map [0, 1] to [-1, 1]
-            let x = 2.0 * (u - 0.5)
-            let y = 2.0 * (v - 0.5)
-            
-            let ray = Ray(origin: Vec3(0, 0, 0), direction: Vec3(x, y, -1.0))
+            let ray = camera.getRay(u: u, v: v)  // Replace manual ray creation
             let color = rayColor(ray: ray)
             
             let r = CGFloat(color.x)

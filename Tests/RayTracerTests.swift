@@ -28,3 +28,16 @@ final class SphereTests: XCTestCase {
         XCTAssertNil(sphere.hit(ray: ray), "The ray should miss the sphere.")
     }
 }
+
+final class CameraTests: XCTestCase {
+    func testCameraRayDirection() {
+        let camera = Camera(lookFrom: Vec3(0,0,0), lookAt: Vec3(0,0,-1))
+        let ray = camera.getRay(u: 0.5, v: 0.5)
+        XCTAssertEqual(ray.direction.z, -1, accuracy: 0.001, "Center ray should point straight back")
+    }
+    
+    func testCameraAspectRatio() {
+        let camera = Camera(aspectRatio: 16.0/9.0)
+        XCTAssertEqual(camera.horizontal.length() / camera.vertical.length(), 16.0/9.0, accuracy: 0.001)
+    }
+}
