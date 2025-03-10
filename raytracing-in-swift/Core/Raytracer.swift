@@ -24,7 +24,7 @@ func rayColor(ray: Ray) -> Vec3 {
     return Vec3(1.0, 1.0, 1.0) * (1.0 - t) + Vec3(0.5, 0.7, 1.0) * t
 }
 
-func generateImage(width: Int, height: Int) -> PlatformImage {
+func generateImage(width: Int, height: Int, camera: Camera) -> PlatformImage {
     let size = CGSize(width: width, height: height)
 
     #if canImport(UIKit)
@@ -46,7 +46,7 @@ func generateImage(width: Int, height: Int) -> PlatformImage {
     #endif
 }
 
-func renderPixels(width: Int, height: Int, cgContext: CGContext) {
+func renderPixels(width: Int, height: Int, camera: Camera, cgContext: CGContext) {
     let aspectRatio = Double(width) / Double(height)
     let camera = Camera(aspectRatio: aspectRatio)
     
@@ -55,7 +55,7 @@ func renderPixels(width: Int, height: Int, cgContext: CGContext) {
             let u = Double(i) / Double(width - 1)
             let v = Double(j) / Double(height - 1)
             
-            let ray = camera.getRay(u: u, v: v)  // Replace manual ray creation
+        	let ray = camera.getRay(u: u, v: v)
             let color = rayColor(ray: ray)
             
             let r = CGFloat(color.x)
