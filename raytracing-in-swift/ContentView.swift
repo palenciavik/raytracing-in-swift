@@ -28,7 +28,7 @@ struct ContentView: View {
         }
         .onAppear{
             DispatchQueue.global(qos: .userInitiated).async {
-                let renderedImage = generateImage(width: 200, height: 200)
+                let renderedImage = generateImage(width: 200, height: 200, camera: camera)
                 DispatchQueue.main.async {
                     self.image = renderedImage
                 }
@@ -112,16 +112,24 @@ struct CameraControlsView: View {
     
     private func moveCamera(direction: MoveDirection) {
         let speed = 0.1
-        var offset = Vec3(0, 0, 0)
+        
+        // Calculate camera-relative direction vectors
+        let forward = (camera.target - camera.position).normalized()
+        let right = camera.vUp.cross(forward).normalized()
+        let up = forward.cross(right) // Already normalized
+        
+        var movement = Vec3(0, 0, 0)
         
         switch direction {
-        case .forward: offset.z = -speed
-        case .backward: offset.z = speed
-        case .left: offset.x = -speed
-        case .right: offset.x = speed
+        case .forward: movement = forward * speed
+        case .backward: movement = forward * -speed
+        case .left: movement = right * -speed
+        case .right: movement = right * speed
         }
         
-        camera.position = camera.position + offset
+        camera.position = camera.position + movement
+		// Move target too, to maintain orientation.
+        camera.target = camera.target + movement
         camera.update()
         render()
     }

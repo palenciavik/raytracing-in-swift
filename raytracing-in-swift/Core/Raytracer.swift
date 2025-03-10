@@ -31,7 +31,7 @@ func generateImage(width: Int, height: Int, camera: Camera) -> PlatformImage {
     let renderer = UIGraphicsImageRenderer(size: size)
     return renderer.image { context in
         let cgContext = context.cgContext
-        renderPixels(width: width, height: height, cgContext: cgContext)
+        renderPixels(width: width, height: height, camera: camera, cgContext: cgContext)
     }
     #elseif canImport(AppKit)
     let image = NSImage(size: size)
@@ -47,15 +47,19 @@ func generateImage(width: Int, height: Int, camera: Camera) -> PlatformImage {
 }
 
 func renderPixels(width: Int, height: Int, camera: Camera, cgContext: CGContext) {
-    let aspectRatio = Double(width) / Double(height)
-    let camera = Camera(aspectRatio: aspectRatio)
+
+    var updatedCamera = camera
+    if updatedCamera.aspectRatio != Double(width) / Double(height) {
+        updatedCamera.aspectRatio = Double(width) / Double(height)
+        updatedCamera.update()
+    }
     
     for j in 0..<height {
         for i in 0..<width {
             let u = Double(i) / Double(width - 1)
             let v = Double(j) / Double(height - 1)
             
-        	let ray = camera.getRay(u: u, v: v)
+        	let ray = updatedCamera.getRay(u: u, v: v)
             let color = rayColor(ray: ray)
             
             let r = CGFloat(color.x)
